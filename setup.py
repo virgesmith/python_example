@@ -1,8 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+
+# attempting a mixed python-C++ package
 
 # Available at setup time due to pyproject.toml
-from pybind11.setup_helpers import Pybind11Extension, build_ext
-from pybind11 import get_cmake_dir
+from pybind11.setup_helpers import Pybind11Extension
 
 import sys
 
@@ -18,25 +19,22 @@ __version__ = "0.0.1"
 #   reproducible builds (https://github.com/pybind/python_example/pull/53)
 
 ext_modules = [
-    Pybind11Extension("python_example",
+    Pybind11Extension("_cpp_example",
         ["src/main.cpp"],
         # Example: passing in the version to the compiled code
         define_macros = [('VERSION_INFO', __version__)],
+        cxx_std=17
         ),
 ]
 
 setup(
     name="python_example",
     version=__version__,
-    author="Sylvain Corlay",
-    author_email="sylvain.corlay@gmail.com",
-    url="https://github.com/pybind/python_example",
-    description="A test project using pybind11",
+    url="https://github.com/virgesmith/python_example",
+    description="A test mixed python and C++ project using pybind11, based on https://github.com/pybind/python_example",
     long_description="",
+    packages = find_packages(),
     ext_modules=ext_modules,
     extras_require={"test": "pytest"},
-    # Currently, build_ext only provides an optional "highest supported C++
-    # level" feature, but in the future it may provide more features.
-    cmdclass={"build_ext": build_ext},
     zip_safe=False,
 )
