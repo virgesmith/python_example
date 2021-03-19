@@ -35,9 +35,10 @@ PYBIND11_MODULE(_cpp_example, m) {
         Some other explanation about the subtract function.
     )pbdoc");
 
+// __version__ isnt visible from __init__.py
 #ifdef VERSION_INFO
-    m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
+    m.attr("version_string") = MACRO_STRINGIFY(VERSION_INFO);
 #else
-    m.attr("__version__") = "dev";
+    m.attr("version_string") = "dev";
 #endif
 }
